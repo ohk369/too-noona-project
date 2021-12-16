@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+    .calcButton{
+        text-align: center;
+        width: 4.5rem;
+        height: 4.5rem;
+    }
+    .zeroButton{
+        text-align: center;
+        width: 21.5rem;
+        height: 4.5rem;
+    }
+</style>
+<body>
+    <h1 id="test_box"></h1>
+    <div class="d-flex justify-content-center align-items-center" style="height: 100vh;">
+        <div class="border" id="start_table" style="width: 40rem;height:30rem;">
+            <div class="w-75 mx-auto my-auto">
+                <form name="calc">
+                    <div class="border col-12 mt-3">
+                        <input type="text" id="output" name="output" class="border-0 col-12" style="text-align: right;background: none;" value="" disabled>
+                        <div calss="d-flex justify-content-between">
+                            <input type="text" id="symbol" name="symbol" class="border-0 col-2" style="padding: 0px;background: none;" value="" disabled>
+                            <input type="text" id="result" name="result" class="border-0 col-9" style="text-align: right;padding: 0px;background: none;" value="0" disabled>
+                        </div>
+                    </div>
+                    <div class="d-flex mt-4 justify-content-between" style="padding: 0px;">
+                        <input type="button" class="border py-3 calcButton" id="calcSeven" value="7" onclick="myNumber(7)">
+                        <input type="button" class="border py-3 calcButton" id="calcEight" value="8" onclick="myNumber(8)">
+                        <input type="button" class="border py-3 calcButton" id="calcNien" value="9" onclick="myNumber(9)">
+                        <input type="button" class="border py-3 calcButton" id="calcReset" value="C" onclick="myReset()">
+                    </div>
+                    <div class="d-flex mt-4 col-12 justify-content-between" style="padding: 0px;">
+                        <input type="button" class="border py-3 calcButton" id="calcFour" value="4" onclick="myNumber(4)">
+                        <input type="button" class="border py-3 calcButton" id="calcFive" value="5" onclick="myNumber(5)">
+                        <input type="button" class="border py-3 calcButton" id="calcSix" value="6" onclick="myNumber(6)">
+                        <input type="button" class="border py-3 calcButton" id="calcPlus" value="+" onclick="Calculation('+')">
+                    </div>
+                    <div class="d-flex mt-4 col-12 justify-content-between" style="padding: 0px;">
+                        <input type="button" class="border py-3 calcButton" id="calcOne" value="1" onclick="myNumber(1)">
+                        <input type="button" class="border py-3 calcButton" id="calcTwo" value="2" onclick="myNumber(2)">
+                        <input type="button" class="border py-3 calcButton" id="calcThree" value="3" onclick="myNumber(3)">
+                        <input type="button" class="border py-3 calcButton" id="calcMinus" value="-" onclick="Calculation('-')">
+                    </div>
+                    <div class="d-flex mt-4 col-12 justify-content-between" style="padding: 0px;">
+                        <input type="button" class="border py-3 zeroButton" id="calcZero" value="0" onclick="myNumber(0)">
+                        <input type="button" class="border py-3 calcButton" style="text-align: center;width: 4.5rem;height: 4.5rem;" id="calcAnswer"value="=" onclick="Calculation('=')">
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div id="elem">クリックすると背景色が変わります。</div>
+</body>
+<script>
+    var Member = function(a,b) {
+        this.firstName = a,
+        this.lastName = b
+    };
+
+    Member.prototype.getName = function() {
+        return this.lastName + " " + this.firstName
+    };
+
+    var mem = new Member("詳細","山田");
+    console.log(mem.getName());
+
+    // document.getElementById('elem')
+    // console.log(document.getElementById('elem'));
+
+    function Calculation(myData) {
+        if(myFlg==0) {
+            myFlg = 1;
+            if(myTotal == 0) {
+                myWork = myInput;
+            } else {
+                myWork = myTotal + myCalc + myInput;
+            }
+            //console.log(myInput+"in");
+            myTotal = eval(myWork);
+            myInput = "";
+            //console.log(myData)
+            if(myData == "=") {
+                document.calc.output.value = myWork+"=";
+            } else {
+                document.calc.output.value = "";
+                document.calc.output.value += myWork;
+            }
+            document.calc.result.value = myTotal;
+            if(document.calc.result.value.indexOf("-") == 0) {
+                document.calc.symbol.value = "-"
+                document.calc.symbol.value.replace("-","")
+            } else {
+                document.calc.symbol.value = ""
+            }
+        }
+
+        if(myData == "="){
+            myWork = "";
+            myCalc = "";
+        } else {
+            myCalc=myData;
+        }
+        //+や-を判断
+        document.calc.output.value+=myCalc;
+    }
+
+    function myReset() {
+        myTotal = "";
+        myCalc = "";
+        myInput = "";
+        document.calc.output.value = "";
+        document.calc.result.value = "0";
+    }
+</script>
+</html>
